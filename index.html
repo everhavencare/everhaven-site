@@ -97,6 +97,10 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
 .book-slot{min-width:0;background:#FFFFFF;border-radius:22px;box-shadow:0 1px 2px rgba(7,26,53,.06),0 20px 50px rgba(7,26,53,.08);overflow:hidden}
 .book-slot iframe{display:block;width:100%;height:640px;border:0}
 .book-fallback{padding:40px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.tour-form{width:100%;display:flex;flex-direction:column;gap:16px;align-items:flex-start;margin-top:6px}
+.tour-form .form2{width:100%}
+.tour-form input[type=date]{min-height:50px}
+@media (max-width:600px){.book-fallback{padding:26px 20px}.tour-form .form2{grid-template-columns:1fr}.tour-form .btn{width:100%}}
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;gap:8px;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:rgba(244,246,249,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid #DCE2EA}
 .mbar .btn{flex:1;padding:13px 8px;font-size:14px}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#0E1116;color:#FFFFFF;font-family:'DM Sans',system-ui,sans-serif;font-weight:600;font-size:14px;padding:10px 16px;border-radius:10px;z-index:60}
@@ -401,7 +405,7 @@ body.gal-lock{overflow:hidden}
         <figure class="tile" style="margin: 0; position: relative; border-radius: 20px; overflow: hidden; background: #DCE2EA"><img loading="lazy" src="assets/bedroom-1.jpg" alt="Resident bedroom with two windows" style="width: 100%; height: 100%; object-fit: cover"><figcaption style="position: absolute; left: 16px; bottom: 16px; background: rgba(255,255,255,.94); border-radius: 10px; padding: 7px 12px; font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Private bedroom</figcaption></figure>
         <figure class="tile" style="margin: 0; position: relative; border-radius: 20px; overflow: hidden; background: #DCE2EA"><img loading="lazy" src="assets/hallway.jpg" alt="Hallway with lighted exit sign" style="width: 100%; height: 100%; object-fit: cover"><figcaption style="position: absolute; left: 16px; bottom: 16px; background: rgba(255,255,255,.94); border-radius: 10px; padding: 7px 12px; font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Marked exits</figcaption></figure>
       </div>
-      <div class="gal-open"><button id="galOpen" class="btn" type="button">See all 22 photos</button></div>
+      <div class="gal-open"><button id="galOpen" class="btn" type="button">See all photos</button></div>
     </div>
   </section>
 
@@ -478,9 +482,40 @@ body.gal-lock{overflow:hidden}
       </div>
       <div id="bookSlot" class="book-slot">
         <div class="book-fallback">
-          <span style="font-family: Fraunces, Georgia, serif; font-size: 26px; line-height: 1.2; font-variation-settings: 'SOFT' 100, 'opsz' 144;">See open tour times</span>
-          <p style="margin: 0; color: #4D5666">Choose a time on our calendar. You'll get a confirmation and reminder by email.</p>
-          <a id="bookBtn" class="btn" href="tel:+16513507411" target="_blank" rel="noopener" style="background: #0C2950; color: #FFFFFF; padding: 16px 26px; font-size: 15px">Call to book a tour</a>
+          <span id="bookTitle" style="font-family: Fraunces, Georgia, serif; font-size: 26px; line-height: 1.2; font-variation-settings: 'SOFT' 100, 'opsz' 144;">Request a tour time</span>
+          <p id="bookNote" style="margin: 0; color: #4D5666">Pick a day and time. We'll confirm by phone or text and send you a Google Calendar invite.</p>
+          <a id="bookBtn" class="btn" href="#" target="_blank" rel="noopener" hidden style="background: #0C2950; color: #FFFFFF; padding: 16px 26px; font-size: 15px">See open tour times</a>
+          <form id="tourForm" data-form="Tour request" novalidate aria-label="Request a tour time" class="tour-form">
+            <div class="form2">
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="t-name" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Your name</label>
+              <input id="t-name" name="name" type="text" autocomplete="name" required style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="t-phone" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Phone</label>
+              <input id="t-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(612) 555-0123" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="t-email" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Email for the invite</label>
+              <input id="t-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="t-who" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">I am a</label>
+              <select id="t-who" name="who" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116"><option>Family member</option><option>Case manager or discharge planner</option><option>Other professional</option></select>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="t-date" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Preferred day</label>
+              <input id="t-date" name="date" type="date" required style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="t-time" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Preferred time</label>
+              <select id="t-time" name="time" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116"><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option></select>
+            </div>
+            </div>
+            <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <button class="btn" type="submit" style="border: 0; background: #0C2950; color: #FFFFFF; padding: 16px 26px; font-size: 15px">Request this time</button>
+            <p style="margin: 0; font-size: 14px; color: #5A6372">Tours run about 30 minutes. Need a different time? Call <a href="tel:+16513507411">(651) 350-7411</a>.</p>
+          </form>
         </div>
       </div>
     </div>
@@ -567,7 +602,24 @@ var EVERHAVEN = {
     var src = EVERHAVEN.bookingEmbedUrl + (EVERHAVEN.bookingEmbedUrl.indexOf('?') > -1 ? '&' : '?') + 'gv=true';
     slot.innerHTML = '<iframe title="Book a tour of EverHaven Care" loading="lazy" src="' + src + '"></iframe>';
   } else if (EVERHAVEN.bookingUrl) {
-    bookBtn.href = EVERHAVEN.bookingUrl; bookBtn.textContent = 'See open tour times';
+    bookBtn.href = EVERHAVEN.bookingUrl; bookBtn.hidden = false;
+    document.getElementById('bookTitle').textContent = 'See open tour times';
+    document.getElementById('bookNote').textContent = "Book instantly on our calendar, or request a time below and we'll confirm it.";
+  }
+  // Tour request: earliest day is tomorrow
+  var td = document.getElementById('t-date');
+  if (td) { var d = new Date(); d.setDate(d.getDate() + 1); td.min = d.toISOString().slice(0, 10); }
+  // One-click Google Calendar link for the team, included in the lead email
+  function calLink(o) {
+    var m = /^(\d{1,2}):(\d{2}) (AM|PM)$/.exec(o.time || ''); if (!o.date || !m) return '';
+    var h = (+m[1] % 12) + (m[3] === 'PM' ? 12 : 0), day = o.date.replace(/-/g, '');
+    function t(hh, mm) { return day + 'T' + ('0' + hh).slice(-2) + ('0' + mm).slice(-2) + '00'; }
+    var start = t(h, +m[2]), end = +m[2] >= 30 ? t(h + 1, +m[2] - 30) : t(h, +m[2] + 30);
+    var q = { action: 'TEMPLATE', text: 'EverHaven tour: ' + (o.name || 'Guest'), dates: start + '/' + end, ctz: 'America/Chicago',
+      location: '3498 Victoria St N, Shoreview, MN 55126',
+      details: 'Tour request from everhavencare.com\nName: ' + (o.name || '') + '\nPhone: ' + (o.phone || '') + '\nEmail: ' + (o.email || '') + '\nRole: ' + (o.who || '') };
+    if (o.email) q.add = o.email;
+    return 'https://calendar.google.com/calendar/render?' + Object.keys(q).map(function (k) { return k + '=' + encodeURIComponent(q[k]); }).join('&');
   }
 
   // Tour video: big play button, then native controls
@@ -619,6 +671,7 @@ var EVERHAVEN = {
   }
   var copy = {
     checkForm: ['Thanks, we got it.', 'Our director or RN will call you back, usually the same day. Urgent? Call (651) 350-7411.'],
+    tourForm: ['Tour requested.', "We'll confirm your time by phone or text, usually the same day, and send a Google Calendar invite."],
     referralForm: ['Referral received.', 'Our director or RN will call you back, usually the same day. Urgent? Call (651) 350-7411.'],
     guideForm: ['', '']
   };
@@ -629,7 +682,9 @@ var EVERHAVEN = {
       if (form.querySelector('[name=botcheck]').value) return;
       if (!valid(form)) { err(form, 'Please fill in the highlighted fields.'); return; }
       var btn = form.querySelector('[type=submit]'), label = btn.innerHTML; btn.disabled = true; btn.textContent = 'Sending...';
-      send(form.dataset.form, collect(form)).then(function () {
+      var data = collect(form);
+      if (form.id === 'tourForm') data.add_to_google_calendar = calLink(data);
+      send(form.dataset.form, data).then(function () {
         if (form.id === 'guideForm') { form.remove(); document.getElementById('guideBody').hidden = false; }
         else done(form, copy[form.id][0], copy[form.id][1]);
       }).catch(function () {
