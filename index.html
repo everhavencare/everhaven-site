@@ -119,6 +119,7 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
 .tour-play:hover .tour-icon{transform:scale(1.06)}
 .tour-label{font-family:'DM Sans',system-ui,sans-serif;font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 @media (max-width:600px){.tour{border-radius:14px}.tour-play{padding:16px 18px;gap:12px}.tour-icon{width:52px;height:52px}.tour-label{font-size:11.5px}}
+@media (max-width:600px){.pair{grid-template-columns:1fr!important}}
 
 /* gallery */
 .mosaic figure{cursor:zoom-in}
@@ -204,9 +205,15 @@ body.gal-lock{overflow:hidden}
               <select id="a-when" name="timeline" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116"><option>ASAP</option><option>Within a week</option><option>This month</option><option>Planning ahead</option></select>
             </div>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 6px">
-            <label for="a-phone" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Phone or email</label>
-            <input id="a-phone" name="contact" type="text" data-contact autocomplete="on" required placeholder="(612) 555-0123 or you@email.com" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+          <div class="pair" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="a-phone" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Phone</label>
+              <input id="a-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(612) 555-0123" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+              <label for="a-email" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Email</label>
+              <input id="a-email" name="email" type="email" autocomplete="email" required placeholder="you@email.com" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+            </div>
           </div>
           <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn" type="submit" style="border: 0; background: #0C2950; color: #FFFFFF; padding: 16px 22px; font-size: 15px; margin-top: 4px">Check availability</button>
           <p style="margin: 0; font-size: 14px; color: #5A6372; text-align: center">We reach out, usually the same day.</p>
@@ -502,8 +509,8 @@ body.gal-lock{overflow:hidden}
               <input id="t-phone" name="phone" type="tel" autocomplete="tel" required placeholder="(612) 555-0123" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
             </div>
             <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
-              <label for="t-email" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Email for the invite</label>
-              <input id="t-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
+              <label for="t-email" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Email</label>
+              <input id="t-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" style="background: #FFFFFF; border: 1.5px solid #D5DCE6; color: #0E1116">
             </div>
             <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
               <label for="t-who" style="font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">I am a</label>
