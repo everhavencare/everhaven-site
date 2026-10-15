@@ -97,10 +97,15 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
 .book-slot{min-width:0;background:#FFFFFF;border-radius:22px;box-shadow:0 1px 2px rgba(7,26,53,.06),0 20px 50px rgba(7,26,53,.08);overflow:hidden}
 .book-slot iframe{display:block;width:100%;height:640px;border:0}
 .book-fallback{padding:40px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.book-fallback.under{border-top:1px solid #DCE2EA;padding:22px 40px 26px}
+.book-alt{background:none;border:0;padding:0;font:600 16px/1.4 'DM Sans',system-ui,sans-serif;color:#0C2950;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.book-or{width:100%;display:flex;align-items:center;gap:14px;margin:14px 0 0!important;font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#5A6372}
+.book-or::before,.book-or::after{content:"";flex:1;height:1px;background:#DCE2EA}
+.tour-form.alt [type=submit]{background:#FFFFFF!important;color:#071A35!important;border:1.5px solid #0C2950!important}
 .tour-form{width:100%;display:flex;flex-direction:column;gap:16px;align-items:flex-start;margin-top:6px}
 .tour-form .form2{width:100%}
 .tour-form input[type=date]{min-height:50px}
-@media (max-width:600px){.book-fallback{padding:26px 20px}.tour-form .form2{grid-template-columns:1fr}.tour-form .btn{width:100%}}
+@media (max-width:600px){.book-fallback{padding:26px 20px}.book-fallback.under{padding:20px}.tour-form .form2{grid-template-columns:1fr}.tour-form .btn{width:100%}}
 .mbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:none;gap:8px;padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:rgba(244,246,249,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid #DCE2EA}
 .mbar .btn{flex:1;padding:13px 8px;font-size:14px}
 .toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#0E1116;color:#FFFFFF;font-family:'DM Sans',system-ui,sans-serif;font-weight:600;font-size:14px;padding:10px 16px;border-radius:10px;z-index:60}
@@ -485,6 +490,7 @@ body.gal-lock{overflow:hidden}
           <span id="bookTitle" style="font-family: Fraunces, Georgia, serif; font-size: 26px; line-height: 1.2; font-variation-settings: 'SOFT' 100, 'opsz' 144;">Request a tour time</span>
           <p id="bookNote" style="margin: 0; color: #4D5666">Pick a day and time. We'll confirm by phone or text and send you a Google Calendar invite.</p>
           <a id="bookBtn" class="btn" href="#" target="_blank" rel="noopener" hidden style="background: #0C2950; color: #FFFFFF; padding: 16px 26px; font-size: 15px">See open tour times</a>
+          <p id="bookOr" class="book-or" hidden>Or request a time</p>
           <form id="tourForm" data-form="Tour request" novalidate aria-label="Request a tour time" class="tour-form">
             <div class="form2">
             <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
@@ -587,8 +593,8 @@ body.gal-lock{overflow:hidden}
 var EVERHAVEN = {
   web3formsKey: "",       // free key from web3forms.com; sends every lead to info@everhavencare.com
   sheetWebhook: "",       // Google Apps Script web app URL; logs every lead to the lead sheet
-  bookingUrl: "",         // Google Calendar booking page link (https://calendar.app.google/...)
-  bookingEmbedUrl: ""     // Google Calendar embed link (https://calendar.google.com/calendar/appointments/schedules/...)
+  bookingUrl: "https://calendar.app.google/jbor9Euo8WjXVFTbA",         // Google Calendar booking page link (https://calendar.app.google/...)
+  bookingEmbedUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2OElN0SYmTu-t4bPYPOoYKpshqNOkN6bhBKnLru5MsA7VzP0eQB9q7ZOKcq5kOZBEKFXXfUkOR"     // Google Calendar embed link (https://calendar.google.com/calendar/appointments/schedules/...)
 };
 /* ===================================================== */
 
@@ -600,11 +606,20 @@ var EVERHAVEN = {
   var slot = document.getElementById('bookSlot'), bookBtn = document.getElementById('bookBtn');
   if (EVERHAVEN.bookingEmbedUrl) {
     var src = EVERHAVEN.bookingEmbedUrl + (EVERHAVEN.bookingEmbedUrl.indexOf('?') > -1 ? '&' : '?') + 'gv=true';
-    slot.innerHTML = '<iframe title="Book a tour of EverHaven Care" loading="lazy" src="' + src + '"></iframe>';
+    var fr = document.createElement('iframe'); fr.title = 'Book a tour of EverHaven Care'; fr.loading = 'lazy'; fr.src = src;
+    slot.insertBefore(fr, slot.firstChild);
+    var fb = slot.querySelector('.book-fallback'), tf = document.getElementById('tourForm');
+    fb.classList.add('under'); document.getElementById('bookTitle').hidden = true; document.getElementById('bookNote').hidden = true; bookBtn.hidden = true;
+    tf.hidden = true; tf.classList.add('alt');
+    var alt = document.createElement('button'); alt.type = 'button'; alt.className = 'book-alt';
+    alt.textContent = "Don't see a time that works? Request one";
+    fb.insertBefore(alt, tf);
+    alt.addEventListener('click', function () { alt.hidden = true; tf.hidden = false; document.getElementById('t-name').focus(); });
   } else if (EVERHAVEN.bookingUrl) {
     bookBtn.href = EVERHAVEN.bookingUrl; bookBtn.hidden = false;
+    document.getElementById('bookOr').hidden = false; document.getElementById('tourForm').classList.add('alt');
     document.getElementById('bookTitle').textContent = 'See open tour times';
-    document.getElementById('bookNote').textContent = "Book instantly on our calendar, or request a time below and we'll confirm it.";
+    document.getElementById('bookNote').textContent = "Book instantly on our calendar. You'll get a confirmation and reminder by email.";
   }
   // Tour request: earliest day is tomorrow
   var td = document.getElementById('t-date');
