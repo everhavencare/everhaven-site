@@ -89,7 +89,9 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
 .guide-body details[open] summary::after{content:"\2212"}
 .guide-body p,.guide-body ul{margin:10px 0 0;color:#C7D2E3;font-size:16.5px}
 .guide-body ul{padding-left:20px}
-.guide-ok{margin:0 0 6px!important;padding:16px 0 4px;color:#E9D3A8!important;font-size:16px!important}
+.guide-dl{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px 0 18px}
+.guide-ok{margin:0!important;color:#FFFFFF!important;font-family:Fraunces,Georgia,serif;font-variation-settings:'SOFT' 100,'opsz' 144;font-size:24px!important}
+.guide-note{margin:0!important;font-size:14.5px!important;color:#C7D2E3!important}
 .guide-fine{font-size:13.5px!important;margin-top:16px!important}
 .book{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}
 .book-slot{min-width:0;background:#FFFFFF;border-radius:22px;box-shadow:0 1px 2px rgba(7,26,53,.06),0 20px 50px rgba(7,26,53,.08);overflow:hidden}
@@ -379,7 +381,11 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
           <input class="hp" type="text" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn" type="submit" style="border: 0; background: #C9A15E; color: #071A35; padding: 14px 24px; font-size: 15px">Send me the guide</button>
         </form>
         <div id="guideBody" class="guide-body" hidden>
-          <p class="guide-ok">Here's your guide. Bookmark this page to come back to it, or call (651) 350-7411 with questions.</p>
+          <div class="guide-dl">
+            <p class="guide-ok">Your guide is ready.</p>
+            <a class="btn" href="assets/everhaven-family-guide.pdf" target="_blank" rel="noopener" download="EverHaven-Care-Paying-for-Assisted-Living-MN.pdf" style="background: #C9A15E; color: #071A35; padding: 15px 26px; font-size: 15px">Download the guide (PDF)</a>
+            <p class="guide-note">6 pages: the two bills of assisted living, MnCHOICES, CADI vs Elderly Waiver, Housing Support, private pay, and checklists. Quick summary below.</p>
+          </div>
           <details open><summary>Step 1: Start with a MnCHOICES assessment</summary><p>Minnesota's public programs start with a MnCHOICES assessment. Contact your county (or tribal nation, or health plan if your loved one is enrolled in one) and ask for an assessment for home and community-based services. It decides which programs your loved one qualifies for.</p></details>
           <details><summary>CADI (Community Access for Disability Inclusion)</summary><p>A Medical Assistance waiver for people under 65 with a certified disability who need the level of care a nursing home provides. At EverHaven that usually means residents age 55 to 64. CADI can pay for the care services in assisted living.</p></details>
           <details><summary>Elderly Waiver (EW)</summary><p>A Medical Assistance program for people 65 and older who need nursing home level care but can be served in the community. Like CADI, it can pay for care services in assisted living. Talk with us early, since every EW case is reviewed individually.</p></details>
