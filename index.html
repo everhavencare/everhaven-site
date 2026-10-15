@@ -110,6 +110,35 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
 .tour-play:hover .tour-icon{transform:scale(1.06)}
 .tour-label{font-family:'DM Sans',system-ui,sans-serif;font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 @media (max-width:600px){.tour{border-radius:14px}.tour-play{padding:16px 18px;gap:12px}.tour-icon{width:52px;height:52px}.tour-label{font-size:11.5px}}
+
+/* gallery */
+.mosaic figure{cursor:zoom-in}
+.gal-open{display:flex;justify-content:flex-end;margin-top:-18px}
+.gal-open .btn{background:#FFFFFF;color:#071A35;border:1.5px solid #0E1116;padding:14px 22px;font-size:14px}
+.gal{position:fixed;inset:0;z-index:100;background:#071A35;color:#FFFFFF;display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px))}
+.gal-top{display:flex;align-items:center;gap:16px;padding:18px 8px 14px;max-width:1240px;width:100%;margin:0 auto}
+.gal-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.gal-tabs::-webkit-scrollbar{display:none}
+.gal-tabs button{flex:none;font-family:'DM Sans',system-ui,sans-serif;font-weight:500;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#C7D2E3;background:transparent;border:1.5px solid rgba(255,255,255,.2);border-radius:999px;padding:9px 16px;cursor:pointer}
+.gal-tabs button[aria-selected="true"]{background:#C9A15E;border-color:#C9A15E;color:#071A35}
+.gal-x{flex:none;width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:transparent;color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.gal-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-content:start;grid-auto-rows:max-content;max-width:1240px;width:100%;margin:0 auto;padding:4px 8px 28px}
+.gal-grid button{position:relative;display:block;padding:0;border:0;border-radius:12px;overflow:hidden;cursor:zoom-in;background:#0C2950}
+.gal-grid img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;display:block;transition:transform .4s ease}
+.gal-grid button:hover img{transform:scale(1.04)}
+.gal-grid span{position:absolute;left:0;bottom:0;right:0;padding:22px 10px 8px;background:linear-gradient(transparent,rgba(5,16,31,.75));text-align:left;font-family:'DM Sans',system-ui,sans-serif;font-size:12.5px;font-weight:600;color:#FFFFFF;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.gal-view{position:absolute;inset:0;background:#05101F;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+.gal-fig{margin:0;max-width:min(1500px,92vw);display:flex;flex-direction:column;gap:12px}
+.gal-fig img{max-width:100%;max-height:78vh;object-fit:contain;border-radius:10px;display:block;margin:0 auto;user-select:none;-webkit-user-drag:none}
+.gal-fig figcaption{display:flex;justify-content:space-between;gap:16px;font-family:'DM Sans',system-ui,sans-serif;font-size:15px;color:#C7D2E3}
+.gal-nav{position:absolute;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.gal-nav:hover{background:rgba(255,255,255,.22)}
+.gal-prev{left:max(16px,env(safe-area-inset-left,0px))}
+.gal-next{right:max(16px,env(safe-area-inset-right,0px))}
+.gal-back{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));font-family:'DM Sans',system-ui,sans-serif;font-weight:500;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#FFFFFF;background:rgba(255,255,255,.12);border:0;border-radius:999px;padding:11px 18px;cursor:pointer}
+body.gal-lock{overflow:hidden}
+@media (max-width:900px){.gal-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:600px){.gal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.gal-nav{display:none}.gal-fig{max-width:100vw}.gal-fig img{border-radius:0;max-height:70vh}.gal-fig figcaption{padding:0 16px;font-size:14px}.gal-grid img{aspect-ratio:4/3}.gal-grid span{display:none}.gal-open{justify-content:stretch;margin-top:-8px}.gal-open .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -372,6 +401,7 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
         <figure class="tile" style="margin: 0; position: relative; border-radius: 20px; overflow: hidden; background: #DCE2EA"><img loading="lazy" src="assets/bedroom-1.jpg" alt="Resident bedroom with two windows" style="width: 100%; height: 100%; object-fit: cover"><figcaption style="position: absolute; left: 16px; bottom: 16px; background: rgba(255,255,255,.94); border-radius: 10px; padding: 7px 12px; font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Private bedroom</figcaption></figure>
         <figure class="tile" style="margin: 0; position: relative; border-radius: 20px; overflow: hidden; background: #DCE2EA"><img loading="lazy" src="assets/hallway.jpg" alt="Hallway with lighted exit sign" style="width: 100%; height: 100%; object-fit: cover"><figcaption style="position: absolute; left: 16px; bottom: 16px; background: rgba(255,255,255,.94); border-radius: 10px; padding: 7px 12px; font-family: 'DM Sans', system-ui, sans-serif; font-weight: 600; font-size: 13px">Marked exits</figcaption></figure>
       </div>
+      <div class="gal-open"><button id="galOpen" class="btn" type="button">See all 22 photos</button></div>
     </div>
   </section>
 
@@ -490,6 +520,26 @@ html{scroll-behavior:smooth;scroll-padding-top:20px}
     </div>
   </footer>
 </div>
+<div class="gal" id="gal" hidden role="dialog" aria-modal="true" aria-label="EverHaven Care photo gallery">
+  <div class="gal-top">
+    <div class="gal-tabs" role="tablist" aria-label="Photo categories">
+      <button type="button" role="tab" data-cat="all" aria-selected="true">All</button>
+      <button type="button" role="tab" data-cat="shared" aria-selected="false">Shared spaces</button>
+      <button type="button" role="tab" data-cat="bedrooms" aria-selected="false">Bedrooms</button>
+      <button type="button" role="tab" data-cat="bathrooms" aria-selected="false">Bathrooms</button>
+      <button type="button" role="tab" data-cat="safety" aria-selected="false">Safety</button>
+      <button type="button" role="tab" data-cat="outside" aria-selected="false">Outside</button>
+    </div>
+    <button type="button" class="gal-x" id="galClose" aria-label="Close gallery"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+  </div>
+  <div class="gal-grid" id="galGrid"></div>
+  <div class="gal-view" id="galView" hidden>
+    <button type="button" class="gal-nav gal-prev" id="galPrev" aria-label="Previous photo"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <figure class="gal-fig"><img id="galImg" alt=""><figcaption><span id="galCap"></span><span id="galCount"></span></figcaption></figure>
+    <button type="button" class="gal-nav gal-next" id="galNext" aria-label="Next photo"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+    <button type="button" class="gal-back" id="galBack">All photos</button>
+  </div>
+</div>
 <nav class="mbar" aria-label="Quick actions">
   <a class="btn" href="tel:+16513507411" style="background: #FFFFFF; color: #071A35; border: 1.5px solid #DCE2EA">Call</a>
   <a class="btn" href="#book" style="background: #FFFFFF; color: #071A35; border: 1.5px solid #DCE2EA">Tour</a>
@@ -590,6 +640,59 @@ var EVERHAVEN = {
   });
   function err(form, msg) { var p = document.createElement('p'); p.className = 'form-err'; p.textContent = msg; form.after(p); }
 })();
+
+  // Photo gallery: grid with category tabs, full-screen viewer with swipe and keys
+  (function () {
+    var PHOTOS = [{"src": "assets/gallery/01.jpg", "thumb": "assets/gallery/01-t.jpg", "cat": "shared", "cap": "Living room with fireplace", "match": "assets/living.jpg"}, {"src": "assets/gallery/02.jpg", "thumb": "assets/gallery/02-t.jpg", "cat": "shared", "cap": "Living room open to the kitchen"}, {"src": "assets/gallery/03.jpg", "thumb": "assets/gallery/03-t.jpg", "cat": "shared", "cap": "Kitchen"}, {"src": "assets/gallery/04.jpg", "thumb": "assets/gallery/04-t.jpg", "cat": "shared", "cap": "Kitchen with granite island", "match": "assets/kitchen.jpg"}, {"src": "assets/gallery/05.jpg", "thumb": "assets/gallery/05-t.jpg", "cat": "shared", "cap": "Dining table"}, {"src": "assets/gallery/06.jpg", "thumb": "assets/gallery/06-t.jpg", "cat": "shared", "cap": "Back deck with rocking chairs"}, {"src": "assets/gallery/07.jpg", "thumb": "assets/gallery/07-t.jpg", "cat": "shared", "cap": "Back deck"}, {"src": "assets/gallery/08.jpg", "thumb": "assets/gallery/08-t.jpg", "cat": "bedrooms", "cap": "Bedroom", "match": "assets/bedroom-1.jpg"}, {"src": "assets/gallery/09.jpg", "thumb": "assets/gallery/09-t.jpg", "cat": "bedrooms", "cap": "Bedroom"}, {"src": "assets/gallery/10.jpg", "thumb": "assets/gallery/10-t.jpg", "cat": "bedrooms", "cap": "Bedroom"}, {"src": "assets/gallery/11.jpg", "thumb": "assets/gallery/11-t.jpg", "cat": "bedrooms", "cap": "Bedroom"}, {"src": "assets/gallery/12.jpg", "thumb": "assets/gallery/12-t.jpg", "cat": "bedrooms", "cap": "Bedroom"}, {"src": "assets/gallery/13.jpg", "thumb": "assets/gallery/13-t.jpg", "cat": "bathrooms", "cap": "Bathroom with tub and grab bar"}, {"src": "assets/gallery/14.jpg", "thumb": "assets/gallery/14-t.jpg", "cat": "bathrooms", "cap": "Bathroom with grab bar"}, {"src": "assets/gallery/15.jpg", "thumb": "assets/gallery/15-t.jpg", "cat": "safety", "cap": "Marked exit and fire extinguisher", "match": "assets/hallway.jpg"}, {"src": "assets/gallery/16.jpg", "thumb": "assets/gallery/16-t.jpg", "cat": "safety", "cap": "Posted evacuation plan and fire extinguisher"}, {"src": "assets/gallery/17.jpg", "thumb": "assets/gallery/17-t.jpg", "cat": "safety", "cap": "Marked stair edges"}, {"src": "assets/gallery/18.jpg", "thumb": "assets/gallery/18-t.jpg", "cat": "safety", "cap": "Handwashing reminders for staff"}, {"src": "assets/gallery/19.jpg", "thumb": "assets/gallery/19-t.jpg", "cat": "outside", "cap": "Front of the house"}, {"src": "assets/gallery/20.jpg", "thumb": "assets/gallery/20-t.jpg", "cat": "outside", "cap": "Aerial view of the house and deck"}, {"src": "assets/gallery/21.jpg", "thumb": "assets/gallery/21-t.jpg", "cat": "outside", "cap": "The house among the trees"}, {"src": "assets/gallery/22.jpg", "thumb": "assets/gallery/22-t.jpg", "cat": "outside", "cap": "Shoreview"}];
+    var gal = document.getElementById('gal'), grid = document.getElementById('galGrid'), view = document.getElementById('galView');
+    var img = document.getElementById('galImg'), cap = document.getElementById('galCap'), count = document.getElementById('galCount');
+    var cat = 'all', list = PHOTOS, idx = 0, lastFocus = null;
+    function render() {
+      list = cat === 'all' ? PHOTOS : PHOTOS.filter(function (p) { return p.cat === cat; });
+      grid.innerHTML = '';
+      list.forEach(function (p, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', 'Open photo: ' + p.cap);
+        var im = document.createElement('img'); im.src = p.thumb; im.alt = ''; im.loading = 'lazy';
+        var s = document.createElement('span'); s.textContent = p.cap;
+        b.appendChild(im); b.appendChild(s); b.addEventListener('click', function () { show(i); }); grid.appendChild(b);
+      });
+    }
+    function show(i) {
+      idx = (i + list.length) % list.length; var p = list[idx];
+      img.src = p.src; img.alt = p.cap; cap.textContent = p.cap; count.textContent = (idx + 1) + ' / ' + list.length;
+      view.hidden = false;
+      var n = list[(idx + 1) % list.length]; (new Image()).src = n.src;
+    }
+    function open(startSrc) {
+      lastFocus = document.activeElement; gal.hidden = false; document.body.classList.add('gal-lock');
+      cat = 'all'; setTab(); render(); view.hidden = true;
+      if (startSrc) { var k = PHOTOS.findIndex(function (p) { return p.match === startSrc; }); if (k > -1) show(k); }
+      document.getElementById('galClose').focus();
+    }
+    function close() { gal.hidden = true; view.hidden = true; document.body.classList.remove('gal-lock'); if (lastFocus) lastFocus.focus(); }
+    function setTab() { gal.querySelectorAll('.gal-tabs button').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.cat === cat ? 'true' : 'false'); }); }
+    gal.querySelectorAll('.gal-tabs button').forEach(function (b) { b.addEventListener('click', function () { cat = b.dataset.cat; setTab(); render(); view.hidden = true; }); });
+    document.getElementById('galClose').addEventListener('click', close);
+    document.getElementById('galBack').addEventListener('click', function () { view.hidden = true; });
+    document.getElementById('galPrev').addEventListener('click', function () { show(idx - 1); });
+    document.getElementById('galNext').addEventListener('click', function () { show(idx + 1); });
+    document.addEventListener('keydown', function (e) {
+      if (gal.hidden) return;
+      if (e.key === 'Escape') { if (!view.hidden) view.hidden = true; else close(); }
+      if (!view.hidden && e.key === 'ArrowRight') show(idx + 1);
+      if (!view.hidden && e.key === 'ArrowLeft') show(idx - 1);
+    });
+    var x0 = null;
+    view.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    view.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 45) show(idx + (dx < 0 ? 1 : -1)); x0 = null; });
+    var openBtn = document.getElementById('galOpen'); if (openBtn) openBtn.addEventListener('click', function () { open(); });
+    document.querySelectorAll('.mosaic figure').forEach(function (f) {
+      f.tabIndex = 0; f.setAttribute('role', 'button');
+      var src = (f.querySelector('img') || {}).getAttribute ? f.querySelector('img').getAttribute('src') : '';
+      f.addEventListener('click', function () { open(src); });
+      f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(src); } });
+    });
+  })();
 </script>
 
 </body>
