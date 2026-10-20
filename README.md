@@ -21,7 +21,8 @@ Edit, commit, push. Vercel redeploys in about a minute.
 4. Copy the Web app URL into `sheetWebhook`.
 
 ## Forms on the page
-- **Check a bed** (hero): who, funding, move-in, phone
+- **Check a bed** (hero): who, funding, move-in, phone, email
+- **Book a tour**: Google Calendar booking page embedded on the page. Below it, a tour request form (name, phone, email, who, preferred day and time). Request emails include a one-click "Add to Google Calendar" link.
 - **Referral intake** (case managers): name, agency, phone, email, funding, care needs, age range, move-in, notes, referral packet request
 - **Family funding guide**: name, email. The guide opens on the page after submitting.
 

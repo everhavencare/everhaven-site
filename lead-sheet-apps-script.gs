@@ -5,8 +5,8 @@
  */
 const SHEET_NAME = 'Leads';
 const COLUMNS = [
-  'Submitted', 'Form', 'Name', 'Agency / county', 'Phone', 'Email',
-  'Funding', 'Client age range', 'Move-in timeline', 'Care needs', 'Notes',
+  'Submitted', 'Form', 'Name', 'I am a', 'Agency / county', 'Phone', 'Email',
+  'Tour date', 'Tour time', 'Add tour to Google Calendar', 'Funding', 'Client age range', 'Move-in timeline', 'Care needs', 'Notes',
   'Send referral packet', 'Page', 'Status', 'Owner', 'Next step'
 ];
 
@@ -24,8 +24,8 @@ function doPost(e) {
   if (d.botcheck) return ContentService.createTextOutput('ok');
   sh.appendRow([
     d.submitted ? new Date(d.submitted) : new Date(),
-    d.form || '', d.name || '', d.agency || '', d.phone || '', d.email || '',
-    d.funding || '', d.age_range || '', d.timeline || '', d.care || '', d.notes || '',
+    d.form || '', d.name || '', d.who || '', d.agency || '', d.phone || '', d.email || '',
+    d.date || '', d.time || '', d.add_to_google_calendar || '', d.funding || '', d.age_range || '', d.timeline || '', d.care || '', d.notes || '',
     d.send_referral_packet ? 'Yes' : '', d.page || '', 'New', '', ''
   ]);
   return ContentService.createTextOutput('ok');
