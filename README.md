@@ -36,3 +36,6 @@ No client names, birth dates or diagnoses are collected, by design.
 1. Vercel > Project > Settings > Domains: add `everhavencare.com` and `www.everhavencare.com`.
 2. GoDaddy > My Products > everhavencare.com > DNS. Remove the Wix records, then add what Vercel shows (usually an `A` record `@` to `76.76.21.21` and a `CNAME` `www` to `cname.vercel-dns.com`).
 3. Wait for Vercel to show "Valid Configuration", then cancel Wix.
+
+## Images and fonts
+Optimized photos live in `assets/img` (WebP in several widths) and fonts in `assets/fonts`. Browsers cache both folders for a year, so when you replace a photo, give the new file a new name and update `index.html`. The original JPEGs stay in `assets` as the source files.

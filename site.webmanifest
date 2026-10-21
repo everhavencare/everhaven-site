@@ -1,0 +1,13 @@
+{
+  "name": "EverHaven Care",
+  "short_name": "EverHaven",
+  "description": "A licensed five-bed assisted living home for adults 55+ in Shoreview, Minnesota.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F4F6F9",
+  "theme_color": "#071A35",
+  "icons": [
+    { "src": "/assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
