@@ -37,6 +37,7 @@ No client names, birth dates or diagnoses are collected, by design.
 - Nameservers: `ns1.vercel-dns.com` and `ns2.vercel-dns.com`, so all DNS records live in Vercel > EverHaven Care > Domains > everhavencare.com.
 - `www.everhavencare.com` is the main address; `everhavencare.com` redirects to it.
 - Email records kept in Vercel DNS: MX `smtp.google.com` (priority 1), SPF `v=spf1 include:_spf.google.com ~all`, DMARC `v=DMARC1; p=none`, and the Wix email marketing DKIM keys `s1._domainkey` and `s2._domainkey`.
+- Google Search Console: Domain property `everhavencare.com`, verified by a `google-site-verification` TXT record at the root. Keep that record.
 - Old Wix addresses (`/faq`, `/about-us`, `/privacy-policy`, `/accessibility-statement`) redirect to the matching place on the new site.
 
 ## Images and fonts
