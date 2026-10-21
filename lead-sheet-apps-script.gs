@@ -24,9 +24,15 @@ function doPost(e) {
   if (d.botcheck) return ContentService.createTextOutput('ok');
   sh.appendRow([
     d.submitted ? new Date(d.submitted) : new Date(),
-    d.form || '', d.name || '', d.who || '', d.agency || '', d.phone || '', d.email || '',
-    d.date || '', d.time || '', d.add_to_google_calendar || '', d.funding || '', d.age_range || '', d.timeline || '', d.care || '', d.notes || '',
-    d.send_referral_packet ? 'Yes' : '', d.page || '', 'New', '', ''
+    txt(d.form), txt(d.name), txt(d.who), txt(d.agency), txt(d.phone), txt(d.email),
+    txt(d.date), txt(d.time), txt(d.add_to_google_calendar), txt(d.funding), txt(d.age_range), txt(d.timeline), txt(d.care), txt(d.notes),
+    d.send_referral_packet ? 'Yes' : '', txt(d.page), 'New', '', ''
   ]);
   return ContentService.createTextOutput('ok');
+}
+
+// Visitor text is stored as plain text, never run as a formula (=, +, -, @)
+function txt(v) {
+  v = v == null ? '' : String(v).slice(0, 2000);
+  return /^[=+\-@]/.test(v) ? "'" + v : v;
 }
