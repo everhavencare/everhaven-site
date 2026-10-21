@@ -32,10 +32,12 @@ Visit stats are first-party: no cookies, no IP addresses, no form contents. They
 
 No client names, birth dates or diagnoses are collected, by design.
 
-## Domain (GoDaddy)
-1. Vercel > Project > Settings > Domains: add `everhavencare.com` and `www.everhavencare.com`.
-2. GoDaddy > My Products > everhavencare.com > DNS. Remove the Wix records, then add what Vercel shows (usually an `A` record `@` to `76.76.21.21` and a `CNAME` `www` to `cname.vercel-dns.com`).
-3. Wait for Vercel to show "Valid Configuration", then cancel Wix.
+## Domain and DNS
+- Registrar: Squarespace Domains (bought through Google Workspace). Open it from admin.google.com > Account > Domains > Manage domains.
+- Nameservers: `ns1.vercel-dns.com` and `ns2.vercel-dns.com`, so all DNS records live in Vercel > EverHaven Care > Domains > everhavencare.com.
+- `www.everhavencare.com` is the main address; `everhavencare.com` redirects to it.
+- Email records kept in Vercel DNS: MX `smtp.google.com` (priority 1), SPF `v=spf1 include:_spf.google.com ~all`, DMARC `v=DMARC1; p=none`, and the Wix email marketing DKIM keys `s1._domainkey` and `s2._domainkey`.
+- Old Wix addresses (`/faq`, `/about-us`, `/privacy-policy`, `/accessibility-statement`) redirect to the matching place on the new site.
 
 ## Images and fonts
 Optimized photos live in `assets/img` (WebP in several widths) and fonts in `assets/fonts`. Browsers cache both folders for a year, so when you replace a photo, give the new file a new name and update `index.html`. The original JPEGs stay in `assets` as the source files.
