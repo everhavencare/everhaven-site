@@ -59,13 +59,27 @@ function logEvent(d) {
   ]);
 }
 
-// Stats feed for the Owner Dashboard sync: totals only, never names or contact details
+// Feeds for the Owner Dashboard sync: totals, or recent leads without names or contact details
 function doGet(e) {
   const key = PropertiesService.getScriptProperties().getProperty('SUMMARY_KEY');
   const p = (e && e.parameter) || {};
   if (!key || p.key !== key) return ContentService.createTextOutput('{"error":"forbidden"}').setMimeType(ContentService.MimeType.JSON);
   const days = Math.min(Math.max(parseInt(p.days, 10) || 30, 1), 365);
-  return ContentService.createTextOutput(JSON.stringify(summarize(days))).setMimeType(ContentService.MimeType.JSON);
+  const out = p.feed === 'leads' ? recentLeads(days) : summarize(days);
+  return ContentService.createTextOutput(JSON.stringify(out)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Leads for dashboard alerts. Name, phone, email and notes are left out on purpose.
+function recentLeads(days) {
+  const since = Date.now() - days * 864e5;
+  const leads = rows(SHEET_NAME).filter(function (r) { return r[0] instanceof Date && r[0].getTime() >= since; }).map(function (r) {
+    return {
+      id: 'L' + r[0].getTime(), submitted: r[0].toISOString(), form: r[1], who: r[3], agency: r[4],
+      tourDate: r[7] instanceof Date ? Utilities.formatDate(r[7], TIME_ZONE, 'yyyy-MM-dd') : String(r[7] || ''), tourTime: r[8],
+      funding: r[10], ageRange: r[11], timeline: r[12], care: r[13], status: r[17], owner: r[18], nextStep: r[19]
+    };
+  });
+  return { generated: new Date().toISOString(), sheetUrl: SpreadsheetApp.getActiveSpreadsheet().getUrl(), leads: leads.reverse() };
 }
 
 function summarize(days) {
