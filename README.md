@@ -18,7 +18,7 @@ Edit, commit, push. Vercel redeploys in about a minute.
 1. New Google Sheet called "EverHaven Leads" in the EverHaven Google account.
 2. Extensions > Apps Script. Paste `lead-sheet-apps-script.gs`, save.
 3. Project Settings > Script properties: add `SUMMARY_KEY` (the read key the Owner Dashboard sync uses).
-4. Run `setup` once and authorize. It builds the Leads, Events and Summary tabs and refreshes Summary every hour.
+4. Run `setup` once and authorize. It adds the Website Leads, Website Events and Website Summary tabs (other tabs are never touched) and refreshes the summary every hour.
 5. Deploy > New deployment > Web app. Execute as: Me. Who has access: Anyone.
 6. Copy the Web app URL into `sheetWebhook`.
 

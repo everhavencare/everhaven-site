@@ -1,17 +1,18 @@
 /**
  * EverHaven Care: website lead sheet and analytics
- * 1. Paste into Extensions > Apps Script on a new Google Sheet ("EverHaven Leads"), save.
+ * 1. Paste into Extensions > Apps Script on the lead Google Sheet, save.
  * 2. Project Settings > Script properties: add SUMMARY_KEY (the read key for the dashboard sync).
- * 3. Run setup() once and authorize. It builds the Leads, Events and Summary tabs and an hourly refresh.
+ * 3. Run setup() once and authorize. It adds Website Leads, Website Events and Website Summary tabs
+ *    (other tabs in the sheet are never touched) and an hourly refresh.
  * 4. Deploy > New deployment > Web app (Execute as: Me, Who has access: Anyone).
  *    Copy the Web app URL into EVERHAVEN.sheetWebhook in index.html.
  *
  * Privacy: no cookies, no IP addresses, no form contents in Events. Forms never collect
  * client names, birth dates or diagnoses.
  */
-const SHEET_NAME = 'Leads';
-const EVENTS_NAME = 'Events';
-const SUMMARY_NAME = 'Summary';
+const SHEET_NAME = 'Website Leads';
+const EVENTS_NAME = 'Website Events';
+const SUMMARY_NAME = 'Website Summary';
 const TIME_ZONE = 'America/Chicago';
 const SITE_HOST = /(^|\.)everhavencare\.com$/;
 const COLUMNS = [
