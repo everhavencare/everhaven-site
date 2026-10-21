@@ -41,3 +41,6 @@ No client names, birth dates or diagnoses are collected, by design.
 
 ## Images and fonts
 Optimized photos live in `assets/img` (WebP in several widths) and fonts in `assets/fonts`. Browsers cache both folders for a year, so when you replace a photo, give the new file a new name and update `index.html`. The original JPEGs stay in `assets` as the source files.
+
+## Owner Dashboard sync
+A scheduled task on the owner's Mac (EverHaven website sync, hourly 8 AM to 8 PM while the Claude app is open) reads the web app with `?key=` (totals) and `?feed=leads&key=` (recent leads without names or contact details) and writes them to the EverHaven Owner Dashboard. The read key lives in Script Properties as `SUMMARY_KEY` and on the Mac in `~/.everhaven/summary-key`; it is never stored in this repo.
