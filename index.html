@@ -599,11 +599,66 @@ body.gal-lock{overflow:hidden}
 /* ===== SETTINGS: the only lines you need to edit ===== */
 var EVERHAVEN = {
   web3formsKey: "02e878db-bb68-4e98-b144-7be1b56fe488",       // free key from web3forms.com; sends every lead to info@everhavencare.com
-  sheetWebhook: "",       // Google Apps Script web app URL; logs every lead to the lead sheet
+  sheetWebhook: "",       // Google Apps Script web app URL; logs every lead and visit to the lead sheet
   bookingUrl: "https://calendar.app.google/jbor9Euo8WjXVFTbA",         // Google Calendar booking page link (https://calendar.app.google/...)
   bookingEmbedUrl: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2OElN0SYmTu-t4bPYPOoYKpshqNOkN6bhBKnLru5MsA7VzP0eQB9q7ZOKcq5kOZBEKFXXfUkOR"     // Google Calendar embed link (https://calendar.google.com/calendar/appointments/schedules/...)
 };
 /* ===================================================== */
+
+// Visit stats: first-party, no cookies, no IP addresses, never form contents. Add ?notrack=1 once to skip your own visits.
+(function () {
+  var on = !!EVERHAVEN.sheetWebhook && !navigator.webdriver, store = {};
+  try { store = window.sessionStorage; if (/[?&]notrack=1/.test(location.search)) localStorage.setItem('eh_notrack', '1'); if (localStorage.getItem('eh_notrack')) on = false; } catch (e) {}
+  function get(k) { try { return store.getItem(k); } catch (e) { return null; } }
+  function set(k, v) { try { store.setItem(k, v); } catch (e) {} }
+  var sid = get('eh_sid'); if (!sid) { sid = Math.random().toString(36).slice(2, 12); set('eh_sid', sid); }
+  var q = new URLSearchParams(location.search), ref = '';
+  try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : ''; } catch (e) {}
+  if (ref && ref === location.hostname.replace(/^www\./, '')) ref = '';
+  var engine = /(^|\.)(google|bing|duckduckgo|yahoo|ecosia)\./.exec(ref), search = !!engine;
+  // Source sticks for the whole visit so leads are credited to where the visitor came from
+  var src = get('eh_src'), med = get('eh_med'), cmp = get('eh_cmp');
+  if (!src) {
+    src = q.get('utm_source') || (search ? engine[2] : ref) || 'direct';
+    med = q.get('utm_medium') || (search ? 'organic' : ref ? 'referral' : 'none'); cmp = q.get('utm_campaign') || '';
+    set('eh_src', src); set('eh_med', med); set('eh_cmp', cmp);
+  }
+  var dev = /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : (Math.min(screen.width, screen.height) < 768 ? 'mobile' : 'desktop');
+  var once = {};
+  function track(event, detail, onlyOnce) {
+    if (!on || (onlyOnce && once[event + detail])) return; once[event + detail] = 1;
+    var body = JSON.stringify({ type: 'event', event: event, detail: detail || '', page: location.pathname, host: location.hostname,
+      src: src, med: med, cmp: cmp, ref: ref, dev: dev, sid: sid });
+    var blob = new Blob([body], { type: 'text/plain;charset=utf-8' });
+    if (!(navigator.sendBeacon && navigator.sendBeacon(EVERHAVEN.sheetWebhook, blob)))
+      fetch(EVERHAVEN.sheetWebhook, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: body }).catch(function () {});
+  }
+  window.ehTrack = track;
+  track('pageview');
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a,button'); if (!a) return;
+    var h = a.getAttribute('href') || '';
+    if (h.indexOf('tel:') === 0) track('call', a.closest('header,nav') ? 'header' : 'page');
+    else if (h.indexOf('mailto:') === 0) track('email');
+    else if (/matterport/.test(h)) track('tour_3d', '', true);
+    else if (/\.pdf$/.test(h)) track('guide_download', '', true);
+    else if (h === '#referral') track('cta_referral', a.textContent.trim().slice(0, 40));
+    else if (h === '#book') track('cta_book', a.textContent.trim().slice(0, 40));
+  }, true);
+  document.addEventListener('focusin', function (e) {
+    var f = e.target.closest && e.target.closest('form[data-form]'); if (f) track('form_start', f.dataset.form, true);
+  });
+  var gal = document.getElementById('gal');
+  if (gal) new MutationObserver(function (recs) {
+    if (recs.some(function (r) { return r.oldValue !== null; })) track('gallery_open', '', true);
+  }).observe(gal, { attributes: true, attributeFilter: ['hidden'], attributeOldValue: true });
+  var tv = document.getElementById('tourVideo');
+  if (tv) tv.addEventListener('play', function () { track('video_play', '', true); });
+  // A click into the embedded Google booking calendar moves focus into its frame
+  window.addEventListener('blur', function () {
+    setTimeout(function () { var f = document.activeElement; if (f && f.tagName === 'IFRAME' && /calendar\.google/.test(f.src)) track('booking_open', '', true); }, 0);
+  });
+})();
 
 (function () {
   var toast = document.getElementById('toast'), tt;
@@ -707,6 +762,7 @@ var EVERHAVEN = {
       var data = collect(form);
       if (form.id === 'tourForm') data.add_to_google_calendar = calLink(data);
       send(form.dataset.form, data).then(function () {
+        if (window.ehTrack) window.ehTrack('lead', form.dataset.form);
         if (form.id === 'guideForm') { form.remove(); document.getElementById('guideBody').hidden = false; }
         else done(form, copy[form.id][0], copy[form.id][1]);
       }).catch(function () {
