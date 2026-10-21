@@ -1,6 +1,6 @@
 # everhavencare.com
 
-One-page lead funnel and showcase for EverHaven Care, a licensed 5-bed assisted living home in Shoreview, MN. Plain HTML, no build step. Hosted on Vercel.
+One-page lead funnel and showcase for EverHaven Care, a licensed 5-bed assisted living home in Shoreview, MN. Plain HTML, no build step. Code: github.com/everhavencare/everhaven-site. Hosting: Vercel (EverHaven Care account), which deploys every push to `main` automatically.
 
 ## Settings
 Everything you need to change lives in the SETTINGS block near the bottom of `index.html`:
